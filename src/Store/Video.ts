@@ -9,7 +9,15 @@ function createVideoStore(){
         addVideo: (video: {name: string, data: string}) => update(videos => {
             const id = nanoid()
             const {name,data} = video
-            videos[id] ={data,id,name} ; 
+            videos[id] ={data,id,name,isYt: false} ; 
+            return videos
+        }),
+        addVideoYt: (video: {url: string}) => update(videos => {
+            const id = nanoid()
+            const {url} = video
+            const ytId = url.split("v=")[1]
+            
+            videos[id] ={data: ytId,name: id,id,isYt: true} ; 
             return videos
         }),
         removeVideo: (id: string) => update(videos => {delete videos[id]; return videos}),
